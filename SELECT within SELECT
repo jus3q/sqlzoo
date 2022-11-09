@@ -1,0 +1,53 @@
+--#1
+/*
+List each country name where the population is larger than 'Russia'.
+*/
+SELECT name
+FROM world
+WHERE population >
+     (SELECT population FROM world
+      WHERE name='Russia')
+
+--#2
+/*
+Show the countries in Europe with a per capita GDP greater than 'United Kingdom'.
+*/
+select name, (gdp/population)
+FROM world
+where 
+    (gdp/population) >= (
+    select gdp/population 
+   from world
+   where name = 'United States'
+)
+
+--#3
+/*
+List the name and continent of countries in the continents containing either Argentina or Australia. Order by name of the country.
+*/
+SELECT name, continent 
+FROM world WHERE continent IN (
+SELECT continent FROM world WHERE name IN ('Argentina', 'Australia')
+) 
+ORDER BY name;
+
+
+--  #5
+-- this one requires some extra thought to remove trailing zeros
+/*
+Germany (population 80 million) has the largest population of the countries in Europe. Austria (population 8.5 million) has 11% of the population of Germany.
+Show the name and the population of each country in Europe. Show the population as a percentage of the population of Germany.
+*/
+SELECT name, CONCAT(CAST(ROUND(100*population/(SELECT population FROM world
+WHERE name = 'Germany'),0) AS INT), '%')percetage
+FROM world
+WHERE continent = 'Europe'
+
+
+--6
+select name
+from world x 
+where gdp > all (select gdp from world y where continent = 'Europe' and gdp > 0)
+
+
+
