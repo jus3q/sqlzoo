@@ -1,0 +1,31 @@
+
+--3
+SELECT player,teamid,stadium,mdate
+  FROM game JOIN goal ON (id=matchid)
+ WHERE teamid='GER'
+
+--4.
+select team1, team2, player
+from game join goal on (id=matchid)
+where player like 'Mario%'
+
+--5
+SELECT player, teamid, coach, gtime
+  FROM goal join eteam on teamid=id
+ WHERE gtime<=10
+ 
+ --6
+ SELECT mdate,teamname
+  FROM game JOIN eteam ON (team1=eteam.id)
+WHERE coach LIKE 'Fernando Santos'
+
+--7
+select player --,stadium
+FROM game JOIN goal ON (id = goal.matchid)
+where stadium LIKE '%National Stadium, Warsaw'
+
+--9
+SELECT teamname, count(player)
+  FROM eteam JOIN goal ON id=teamid
+group by teamname
+ ORDER BY teamname
