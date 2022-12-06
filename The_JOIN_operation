@@ -81,3 +81,21 @@ from movie
 join casting on movie.id = casting.movieid
 join actor on actor.id = casting.actorid
 where movie.yr = 1962 AND casting.ord = 1;
+
+
+--12
+with j as (
+SELECT movie.title, actor.name, casting.ord, casting.movieid FROM 
+casting JOIN actor ON casting.actorid = actor.id
+        JOIN movie ON movie.id= casting.movieid
+where actor.name = 'Julie Andrews' )
+
+select m.title, a.name  --, j.name, j.ord, j.movieid,  c.ord 
+FROM j
+join movie m on m.id=j.movieid
+      join casting c on c.movieid=j.movieid
+      join actor a on a.id=c.actorid
+where c.ord = 1
+
+
+
